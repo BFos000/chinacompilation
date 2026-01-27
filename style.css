@@ -1,0 +1,665 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+    background-color: black;
+    color: white;
+  }
+  
+  .container {
+    display: flex;
+    height: 100vh;
+  }
+  
+  .left-panel {
+    width: 68%;
+    padding: 10px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    background-color: #1a1a1a;
+    box-shadow: 2px 0 5px rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto; /* Enable vertical scrolling */
+  }
+  
+  .right-panel {
+    margin-left: 70%; /* Increased margin to ensure enough space for the fixed left panel and padding */
+    margin-right: 0%; /* Increased margin to ensure enough space for the fixed left panel and padding */
+    width: 30%; /* Adjusted width to prevent overflow */
+    padding: 10px;
+    overflow-y: scroll;
+    height: 100vh;
+  white-space: pre-wrap; /* Preserve line breaks and spaces */
+  }
+
+  #current-year {
+    font-size: 2em;
+    color: yellow;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  #image-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Responsive grid */
+    gap: 10px;
+    width: 100%; /* Fill the width of the left panel */
+    justify-items: center;
+    padding: 5px;
+    box-sizing: border-box;
+  }
+  
+  .figure-container {
+    position: relative; /* Allows positioning of the red X within the figure */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  #image-container img {
+    width: 100px; /* Standard width */
+    height: 100px; /* Standard height */
+    object-fit: cover; /* Ensures images fill the frame without distortion */
+    object-position: top; /* Aligns the image to the top */
+    border-radius: 50%; /* Makes the image round */
+    border: 3px solid gold; /* Gold border for the circular frame */
+    display: block;
+    margin: 0 auto;
+  }
+  
+  .red-x {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 30px;
+    height: 30px;
+    color: red;
+    font-size: 54px;
+    font-weight: bold;
+    line-height: 30px;
+    text-align: center;
+    pointer-events: none; /* So that the red X doesn't interfere with hover or click events */
+    text-shadow: 
+    -1px -1px 0 black,  /* Outline to the top-left */
+    1px -1px 0 black,   /* Outline to the top-right */
+    -1px 1px 0 black,   /* Outline to the bottom-left */
+    1px 1px 0 black;    /* Outline to the bottom-right */ 
+}
+  
+  .green-exclamation {
+    position: absolute;
+    top: 5px;
+    right: 5px; /* Positioned in the top-left corner */
+    width: 30px;
+    height: 30px;
+    color: #39FF14;  /* yellow instead of green hehe */
+    font-size: 54px;
+    font-weight: bold;
+    line-height: 30px;
+    text-align: center;
+    pointer-events: none; /* So that the green exclamation mark doesn't interfere with events */
+    text-shadow: 
+    -1px -1px 0 black,  /* Outline to the top-left */
+    1px -1px 0 black,   /* Outline to the top-right */
+    -1px 1px 0 black,   /* Outline to the bottom-left */
+    1px 1px 0 black;    /* Outline to the bottom-right */  
+}
+  
+  
+  .figure-name {
+    font-size: 1em;
+    max-width: 100px;
+    white-space: normal;
+    text-align: center;
+    color: white;
+  }
+  
+  .figure-title {
+    font-size: 0.8em;
+    max-width: 100px;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: yellow;
+    text-align: center;
+  }
+  .map-panel {
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    width: 0%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh; /* Full viewport height */
+    background-color: #1a1a1a;
+    box-shadow: -2px 0 5px rgba(255, 255, 255, 0.1);
+  }
+  
+  .map-container,
+  .photo-box {
+    flex: 1; /* Each takes up half the height of the panel */
+    display: flex;
+    flex-direction: column; /* Arrange children vertically */
+    justify-content: center; /* Center content vertically */
+    align-items: center; /* Center content horizontally */
+    width: 100%; /* Full width of the panel */
+    overflow: hidden; /* Prevents overflowing of content */
+  }
+  
+  .map-container img,
+  .photo-box img {
+    max-width: 90%; /* Ensure the image fits within the panel width */
+    max-height: 100%; /* Ensure the image fits within its container */
+    object-fit: contain; /* Maintain aspect ratio without distortion */
+  }
+  
+  .photo-box {
+    padding-bottom: 10px; /* Add some space for the caption */
+  }
+  
+  #photo-caption {
+    color: white;
+    font-size: 1em;
+    text-align: center;
+    margin-top: 5px; /* Space between the photo and the caption */
+    max-width: 90%; /* Limit caption width to match image width */
+    display: block; /* Ensure the caption is below the image */
+  }
+
+  .figure-regnal-year {
+    font-size: 0.7em;
+    color: grey;
+    text-align: center;
+  }
+  #family-tree-container {
+    flex: 1; /* Take up 50% of the height */
+    overflow-y: auto; /* Allow scrolling for larger trees */
+    padding: 10px;
+  }
+  
+  #family-tree {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .tree-generation {
+    display: flex;
+    justify-content: center; /* Center elements in each generation */
+    gap: 40px; /* Space between nodes in the same generation */
+    margin-bottom: 20px; /* Space between generations */
+  }
+  
+  .tree-member {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.8em;
+    text-align: center;
+  }
+  
+  .node img {
+    width: 45px; /* Standard width */
+    height: 40px; /* Standard height */
+    object-fit: cover; /* Ensures images fill the frame without distortion */
+    object-position: top; /* Aligns the image to the top */
+    border-radius: 50%; /* Makes the image round */
+    border: 3px solid gold; /* Gold border for the circular frame */
+    display: block;
+    margin: 0 auto;
+  }
+  
+  #constitution-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}/* Center titles inside boxes */
+/* Flex container for horizontal layout */
+/* Flex container for row-based layout */
+/* Ensure titles are visible */
+/* Row layout for side-by-side boxes */
+/* Row layout for side-by-side boxes */
+/* Row layout for horizontal arrangement */
+
+/* Your old .row-container uses space-between; that breaks nested flex packing */
+.row-container {
+  justify-content: flex-start !important;
+  gap: 10px;
+}
+
+
+/* Column layout for vertical arrangement */
+.column-container {
+  display: flex;
+  flex-direction: column; /* Arrange children vertically */
+  width: 100%; /* Stretch to fit the parent container */
+}
+
+/* IMPORTANT: your old .group-container clips content */
+.group-container {
+  width: 100% !important;     /* was fit-content */
+  overflow: visible !important; /* was hidden */
+  border: 0;                  /* optional: your old white border is harsh now */
+  padding-top: 0;             /* optional: you were reserving space for old group-title */
+  background: transparent;
+}
+
+
+/* Ensure direct children of .group-container take their intended layout */
+.group-container > .row-container {
+  flex-direction: row; /* Explicit horizontal layout for row-container */
+}
+
+.group-container > .column-container {
+  flex-direction: column; /* Explicit vertical layout for column-container */
+}
+
+
+.group-title {
+    position: absolute; /* Remove it from the normal flow */
+    top: 0; /* Place it at the top of the parent */
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.2em;
+    font-weight: bold;
+    color: yellow;
+    background: black;
+    padding: 5px 10px;
+    /*border: 1px solid white;*/
+    border-radius: 5px;
+    z-index: 1;
+    height: 1.2em; /* Fix height to one row of text */
+    line-height: 1.2; /* Ensure proper alignment within the height */
+    text-align: center;
+	
+	 white-space: nowrap;
+  display: inline-block; /* Ensures the element stretches to fit the text */
+  width: max-content; /* Ensures the width adapts to the text content */
+}
+
+/* Grid layout for members */
+.member-grid {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping to a new row when necessary */
+  justify-content: center; /* Center items horizontally */
+  align-items: center; /* Center items vertically within rows */
+  margin-top: 10px; /* Add spacing below the title */
+  flex-direction: column;
+  height: auto; /* Allow dynamic height based on content */
+  width: 100%;
+}
+
+/* Portrait row */
+.portrait-row {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+
+
+/* Figure container */
+.figure-container {
+  text-align: center;
+}
+
+.portrait-img{
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 50%;
+  /* border: 3px solid gold; Default border */
+}
+
+/* Roles and styling */
+.role-consul {
+  border: 3px solid gold;
+}
+
+.role-former-consul {
+  border: 3px solid purple;
+}
+
+.role-former-aedile {
+  border: 3px solid green;
+}
+
+.role-senator {
+  border: 3px solid blue;
+}
+.triumph-icon {
+  position: absolute;
+  top: 4%;
+  left: 0;
+  width: 100% !important;
+  pointer-events: none; /* Ensure it doesn't interfere with clicks */
+  border: 0px solid white !important;
+}
+
+.icons-container {
+  position: absolute;
+  top: 5%; /* Adjust as needed for vertical positioning */
+  right: 5%; /* Adjust as needed for horizontal positioning */
+  display: flex;
+  gap: 2px; /* Adjust spacing between icons */
+}
+
+/* Inline fasces icons */
+.inline-fasces-icon {
+  width: 1em; /* Match the font size */
+  height: 1em; /* Match the font size */
+  display: inline-block; /* Ensure it behaves like text */
+  vertical-align: middle; /* Align with text baseline */
+  margin-right: 0.2em; /* Spacing between icons */
+}
+
+.death-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 35%; /* Adjust size as needed */
+  height: auto; /* Adjust size as needed */
+  z-index: 10; /* Ensure it appears on top of the portrait */
+}
+.grass-crown-icon {
+  position: absolute;
+  top: -17%;
+  left: -20%;
+  width: 140% !important;
+  pointer-events: none; /* Ensure it doesn't interfere with clicks */
+  border: 0px solid white !important;
+}
+
+/* =========================================================================
+   TABLETS (procedural textures, no image assets)
+   ========================================================================= */
+
+:root {
+  --tablet-w: 120px;
+  --tablet-h: 178px;
+  --tablet-radius: 10px;
+
+  --tablet-bg: #0f0f0f;
+  --tablet-ink: #f2f2f2;
+  --tablet-ink-dim: rgba(242, 242, 242, 0.78);
+  --tablet-ink-faint: rgba(242, 242, 242, 0.55);
+
+  --tablet-shadow: 0 4px 12px rgba(0,0,0,0.45);
+}
+
+.tablet {
+  width: var(--tablet-w);
+  min-width: var(--tablet-w);
+  height: var(--tablet-h);
+  border-radius: var(--tablet-radius);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  box-shadow: var(--tablet-shadow);
+
+  --state-color: #777;
+}
+
+.tablet[data-neutral="1"] {
+  --state-color: #888;
+  filter: saturate(0.65);
+}
+
+/* Base background */
+.tablet::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--state-color) 12%, #0e0e0c),
+      #0b0b0a
+    );
+  z-index: 0;
+}
+
+
+/* Procedural texture layer (switch by data-tex) */
+.tablet::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 1;
+
+  /* default: paper */
+  background-image:
+    radial-gradient(circle at 20% 25%, rgba(255,255,255,0.03), rgba(255,255,255,0) 55%),
+    radial-gradient(circle at 75% 35%, rgba(255,255,255,0.02), rgba(255,255,255,0) 60%),
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.010), rgba(255,255,255,0.010) 1px, rgba(0,0,0,0) 1px, rgba(0,0,0,0) 3px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.008), rgba(255,255,255,0.008) 1px, rgba(0,0,0,0) 1px, rgba(0,0,0,0) 4px);
+  mix-blend-mode: overlay;
+  opacity: 0.55;
+}
+
+/* Denser paper for higher tiers */
+.tablet[data-tex="paperDense"]::after {
+  background-image:
+    radial-gradient(circle at 18% 30%, rgba(255,255,255,0.04), rgba(255,255,255,0) 58%),
+    radial-gradient(circle at 70% 40%, rgba(255,255,255,0.03), rgba(255,255,255,0) 62%),
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.015), rgba(255,255,255,0.015) 1px, rgba(0,0,0,0) 1px, rgba(0,0,0,0) 3px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.012), rgba(255,255,255,0.012) 1px, rgba(0,0,0,0) 1px, rgba(0,0,0,0) 4px);
+  opacity: 0.60;
+}
+
+/* Lacquer: smoother, denser, less fibrous */
+.tablet[data-tex="lacquer"]::after {
+  background-image:
+    radial-gradient(circle at 30% 25%, rgba(255,255,255,0.035), rgba(255,255,255,0) 55%),
+    radial-gradient(circle at 70% 70%, rgba(0,0,0,0.20), rgba(0,0,0,0) 60%),
+    linear-gradient(180deg, rgba(255,255,255,0.015), rgba(0,0,0,0.08));
+  mix-blend-mode: overlay;
+  opacity: 0.75;
+}
+
+/* Header */
+.tablet-header {
+  position: relative;
+  z-index: 1;
+  padding: 8px 8px 6px 8px;
+  text-align: center;
+}
+
+.tablet-name {
+  font-size: 0.85em;
+  line-height: 1.1;
+  color: var(--tablet-ink);
+  font-weight: 600;
+}
+
+.tablet-regnal {
+  margin-top: 2px;
+  font-size: 0.68em;
+  color: var(--tablet-ink-faint);
+}
+
+.tablet-subtitle {
+  margin-top: 3px;
+  font-size: 0.70em;
+  color: rgba(255, 255, 0, 0.75);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Portrait area */
+.tablet-portrait-wrap {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px 8px;
+  flex: 1;
+}
+
+.tablet-portrait {
+  width: 78px;
+  height: 78px;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.35);
+}
+
+/* Rank-based morphology */
+.tablet[data-tier="1"] .tablet-portrait,
+.tablet[data-tier="2"] .tablet-portrait {
+  border-radius: 50%;
+}
+
+.tablet[data-tier="3"] .tablet-portrait,
+.tablet[data-tier="4"] .tablet-portrait {
+  border-radius: 14px;
+}
+
+.tablet[data-tier="5"] .tablet-portrait,
+.tablet[data-tier="6"] .tablet-portrait {
+  border-radius: 4px;
+}
+
+.tablet[data-tier="1"] .tablet-portrait { width: 90px; height: 90px; }
+.tablet[data-tier="2"] .tablet-portrait { width: 82px; height: 82px; }
+.tablet[data-tier="3"] .tablet-portrait { width: 76px; height: 76px; }
+.tablet[data-tier="4"] .tablet-portrait { width: 70px; height: 70px; }
+.tablet[data-tier="5"] .tablet-portrait { width: 62px; height: 62px; }
+.tablet[data-tier="6"] .tablet-portrait { width: 56px; height: 56px; }
+
+/* Seal mark */
+.tablet-seal {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  width: 18px;
+  height: 18px;
+  opacity: 0.24;
+  pointer-events: none;
+}
+
+/* Footer */
+.tablet-footer {
+  position: relative;
+  z-index: 1;
+  padding: 6px 8px 8px 8px;
+  text-align: center;
+}
+
+.tablet-life {
+  font-size: 0.68em;
+  color: var(--tablet-ink-faint);
+}
+
+.tablet-cjk {
+  margin-top: 2px;
+  font-size: 0.72em;
+  color: var(--tablet-ink-dim);
+  font-family: "Noto Serif SC","Source Han Serif SC","Songti SC","SimSun","PMingLiU","serif";
+}
+
+/* Border systems */
+.tablet[data-border="single"] { border: 2px solid var(--state-color); }
+.tablet[data-border="double"] { border: 2px solid var(--state-color); }
+.tablet[data-border="doublexl"]::before {
+  outline: 2px solid rgba(242, 242, 242, 0.24);
+  outline-offset: -6px;
+}
+.tablet[data-border="double"]::before {
+  outline: 1px solid rgba(242, 242, 242, 0.24);
+  outline-offset: -6px;
+}
+.tablet[data-border="inset"] { border: 1px solid rgba(242, 242, 242, 0.25); }
+.tablet[data-border="inset"]::before {
+  outline: 2px solid var(--state-color);
+  outline-offset: -6px;
+}
+.tablet[data-border="hairline"] { border: 1px solid rgba(242, 242, 242, 0.20); }
+
+/* Border weights */
+.tablet[data-weight="hair"] { border-width: 1px; }
+.tablet[data-weight="sm"]   { border-width: 2px; }
+.tablet[data-weight="md"]   { border-width: 3px; }
+.tablet[data-weight="lg"]   { border-width: 4px; }
+.tablet[data-weight="xl"]   { border-width: 5px; }
+
+/* Tiny tier adjustments */
+.tablet[data-tier="1"] .tablet-name { font-size: 0.90em; letter-spacing: 0.2px; }
+.tablet[data-tier="6"] { opacity: 0.92; }
+
+:root {
+  /* one “portrait slot” equals one tablet width plus the horizontal spacing you want */
+  --slot-gap: 12px;
+  --slot-w: calc(var(--tablet-w) + var(--slot-gap));
+}
+
+.state-packed {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.state-row {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  /*gap: 12px;*/
+  align-items: stretch;
+  flex-wrap: nowrap;      /* we do wrapping in JS, not CSS */
+  overflow: visible;      /* avoid clipping */
+}
+
+.state-group {
+  /* slot-based width: slots * slot-w */
+  flex: 0 0 calc(var(--slot-w));
+  max-width: calc(var(--slot-w));
+
+  border-radius: 12px;
+  /*padding: 10px 10px 12px 10px;*/
+
+  /* earthy + faint tint in the state's color */
+  background:
+    radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--state-color) 16%, transparent) 0%, transparent 55%),
+    linear-gradient(180deg, rgba(0,0,0,0.42), rgba(0,0,0,0.60));
+  border: 1px solid color-mix(in srgb, var(--state-color) 35%, rgba(255,255,255,0.12));
+  box-shadow: 0 8px 18px rgba(0,0,0,0.35);
+
+  overflow: visible; /* let tablet shadows breathe */
+}
+
+/* Header */
+.state-group-title {
+  --state-color: rgba(255,255,255,0.35);
+  text-align: center;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  margin: 0 0 10px 0;
+  color: color-mix(in srgb, var(--state-color) 80%, #ffffff 20%);
+  text-shadow: 0 1px 0 rgba(0,0,0,0.8);
+}
+
+/* Make the state group internally lay out tablets nicely */
+.state-group .row-container {
+  justify-content: center !important; /* inside a state group, centering looks best */
+  gap: 10px;
+}
+
+.state-group .member-grid {
+  width: 100%;
+}
